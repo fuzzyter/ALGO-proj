@@ -1,9 +1,9 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\Programming\\Project\\ALGO-proj\\",
+  "WorkspaceRootPath": "E:\\Programming\\Project\\ALGO-proj\\ALGO-proj\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8F49CC24-07B9-416E-97AF-26658D3B495B}|RosterManager\\RosterManager.vcxproj|E:\\Programming\\Project\\ALGO-proj\\RosterManager\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{8F49CC24-07B9-416E-97AF-26658D3B495B}|RosterManager\\RosterManager.vcxproj|E:\\Programming\\Project\\ALGO-proj\\ALGO-proj\\RosterManager\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{8F49CC24-07B9-416E-97AF-26658D3B495B}|RosterManager\\RosterManager.vcxproj|solutionrelative:RosterManager\\main.c||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -24,9 +24,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "main.c",
-              "DocumentMoniker": "E:\\Programming\\Project\\ALGO-proj\\RosterManager\\main.c",
+              "DocumentMoniker": "E:\\Programming\\Project\\ALGO-proj\\ALGO-proj\\RosterManager\\main.c",
               "RelativeDocumentMoniker": "RosterManager\\main.c",
-              "ToolTip": "E:\\Programming\\Project\\ALGO-proj\\RosterManager\\main.c",
+              "ToolTip": "E:\\Programming\\Project\\ALGO-proj\\ALGO-proj\\RosterManager\\main.c",
               "RelativeToolTip": "RosterManager\\main.c",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000423|",
