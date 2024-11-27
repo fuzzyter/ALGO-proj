@@ -57,36 +57,107 @@ void make_student() {
     tail->next = NULL;
 }
 
-// 입력 유효성 검사 함수: 빈 입력 방지
-void validate_input(const char* prompt, char* input, size_t size) {
-    do {
+// 입력 유효성 검사 함수
+void validate_input(const char* prompt, char* input, int size) {
+    while (1) {
         printf("%s", prompt);
-        fgets(input, size, stdin);
-        input[strcspn(input, "\n")] = '\0'; // 개행 문자 제거
-        if (strlen(input) == 0) {
-            printf("입력값이 비어 있습니다. 다시 입력해주세요.\n");
+        if (fgets(input, size, stdin) != NULL) {
+            // 개행 문자 제거
+            input[strcspn(input, "\n")] = '\0';
+            // 비어 있는 입력 확인
+            if (strlen(input) == 0) {
+                printf("입력 중 오류가 발생했습니다. 다시 시도해주세요.\n");
+                continue;  // 빈 입력은 다시 받음
+            }
+            return; // 유효한 입력
         }
-    } while (strlen(input) == 0);
+        else {
+            // fgets 실패 시, 입력 버퍼 정리
+            while (getchar() != '\n');
+        }
+    }
 }
 
-// 전화번호 유효성 검사 함수
-void validate_phone(char* phoneNumber) {
-    do {
+// 성별 함수
+void insert_sex(char* sex) {
+    while (1) {
+        validate_input("성별 (남/여): ", sex, 3);
+        if (strcmp(sex, "남") == 0 || strcmp(sex, "여") == 0) {
+            return; // 유효한 입력
+        }
+        printf("잘못된 입력입니다. 성별은 '남' 또는 '여'만 입력 가능합니다.\n");
+    }
+}
+
+// 이름 함수
+void insert_name(char* name) {
+    while (1) {
+        validate_input("이름: ", name, 50);
+
+        int valid = 1; // 초기값: 유효함
+        for (int i = 0; name[i] != '\0'; i++) {
+            unsigned char ch = name[i];
+            // 아스키 문자 또는 한글(UTF-8 범위) 확인
+            if (!((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z') ||
+                (ch >= 0x80 && ch <= 0xFF) || ch == ' ')) {
+                valid = 0;
+                break;
+            }
+        }
+        if (valid) {
+            return; // 유효한 입력
+        }
+        printf("잘못된 입력입니다. 이름에는 문자(한글 포함)와 공백만 입력 가능합니다.\n");
+    }
+}
+
+// 나이 함수
+void insert_age(int* age) {
+    char input[100]; // 나이 입력을 받을 버퍼
+    while (1) {
+        validate_input("나이: ", input, sizeof(input));
+
+        // 입력받은 값이 숫자만 포함하는지 확인
+        char* endptr;
+        *age = strtol(input, &endptr, 10);
+
+        // strtol을 사용하여 숫자 변환을 시도
+        if (*endptr == '\0' && *age > 0) {
+            return; // 유효한 나이
+        }
+        else {
+            printf("1 이상의 숫자로 입력해주세요.\n");
+        }
+    }
+}
+
+// 전화번호 함수
+void insert_phone(char* phoneNumber) {
+    int firstTry = 1;  // 첫 번째 시도인지 여부를 체크하는 변수
+    while (1) {
+        // 전화번호 입력 받기
         validate_input("전화번호 (예: 010-1234-5678): ", phoneNumber, 20);
-        if (strchr(phoneNumber, '-') == NULL) {
-            printf("전화번호에 '-'가 포함되어야 합니다. 다시 입력해주세요.\n");
+        // 전화번호에 '-'가 포함되어 있으면 유효한 입력으로 처리
+        if (strchr(phoneNumber, '-') != NULL) {
+            return; // 유효한 전화번호
         }
-    } while (strchr(phoneNumber, '-') == NULL);
+        // 첫 번째 시도에서만 경고 메시지 출력
+        if (firstTry) {
+            printf("전화번호에 '-'가 포함되어야 합니다. 다시 입력해주세요.\n");
+            firstTry = 0;  // 첫 번째 시도 후에 경고 메시지를 한번만 출력
+        }
+    }
 }
 
-// 생년월일 유효성 검사 함수
-void validate_birth(char* birth) {
-    do {
+// 생년월일 함수
+void insert_birth(char* birth) {
+    while (1) {
         validate_input("생일 (예: 2004.01.01 or 2004/01/01): ", birth, 11);
-        if (strchr(birth, '.') == NULL && strchr(birth, '/') == NULL) {
-            printf("생일에 '.' 또는 '/'가 포함되어야 합니다. 다시 입력해주세요.\n");
+        if (strchr(birth, '.') != NULL || strchr(birth, '/') != NULL) {
+            return; // 유효한 입력
         }
-    } while (strchr(birth, '.') == NULL && strchr(birth, '/') == NULL);
+        printf("생일에 '.' 또는 '/'가 포함되어야 합니다. 다시 입력해주세요.\n");
+    }
 }
 
 // 학생 추가 함수
@@ -94,19 +165,12 @@ void insert_student() {
     char name[50], sex[3], phoneNumber[20], position[30], birth[11], department[50];
     int age, schoolYear, schoolNumber;
 
-    validate_input("이름: ", name, 50);
-
-    printf("나이: ");
-    while (scanf("%d", &age) != 1) {
-        printf("숫자로 입력해주세요. 다시 입력: ");
-        while (getchar() != '\n'); // 버퍼 비우기
-    }
-    while (getchar() != '\n'); // 버퍼 비우기
-
-    validate_input("성별 (남/여): ", sex, 3);
-    validate_phone(phoneNumber);
+    insert_name(name); // 이름 입력
+    insert_age(&age);
+    insert_sex(sex); // 성별 입력
+    insert_phone(phoneNumber);
     validate_input("직위: ", position, 30);
-    validate_birth(birth);
+    insert_birth(birth);
     validate_input("학과: ", department, 50);
 
     printf("학년: ");
@@ -292,6 +356,24 @@ void search_student() {
     printf("해당 조건에 맞는 학생을 찾을 수 없습니다.\n");
 }
 
+// 학생 정보를 출력하는 함수
+void print_student_info(struct student* student) {
+    if (student == NULL) {
+        printf("학생 정보가 없습니다.\n");
+        return;
+    }
+
+    printf("\n=== 현재 정보 ===\n");
+    printf("이름: %s\n", student->name);
+    printf("나이: %d\n", student->age);
+    printf("성별: %s\n", student->sex);
+    printf("전화번호: %s\n", student->phoneNumber);
+    printf("직위: %s\n", student->position);
+    printf("생일: %s\n", student->birth);
+    printf("학과: %s\n", student->department);
+    printf("학년: %d\n", student->schoolYear);
+    printf("학번: %d\n", student->schoolNumber);
+}
 
 
 // 학생 정보 수정 함수
@@ -311,32 +393,35 @@ void update_student() {
 
     while (current != tail) {
         if (strcmp(current->name, name) == 0) {
-            printf("\n=== 현재 정보 ===\n");
-            printf("이름: %s\n", current->name);
-            printf("나이: %d\n", current->age);
-            printf("성별: %s\n", current->sex);
-            printf("전화번호: %s\n", current->phoneNumber);
-            printf("직위: %s\n", current->position);
-            printf("생일: %s\n", current->birth);
-            printf("학과: %s\n", current->department);
-            printf("학년: %d\n", current->schoolYear);
-            printf("학번: %d\n", current->schoolNumber);
+            print_student_info(current);
 
             printf("\n=== 새 정보 입력 ===\n");
+
             printf("나이: ");
             scanf("%d", &current->age);
+            insert_age(&current->age);
+
             printf("성별 (남/여): ");
             scanf("%s", current->sex);
+            insert_sex(current->sex);
+
             printf("전화번호 (예: 010-0000-1111): ");
             scanf("%s", current->phoneNumber);
+            insert_phone(current->phoneNumber);
+
             printf("직위: ");
             scanf("%s", current->position);
+
             printf("생일 (예: 2004.07.25): ");
             scanf("%s", current->birth);
+            insert_birth(current->birth);
+
             printf("학과: ");
             scanf("%s", current->department);
+
             printf("학년: ");
             scanf("%d", &current->schoolYear);
+
             printf("학번: ");
             scanf("%d", &current->schoolNumber);
 
@@ -347,7 +432,6 @@ void update_student() {
     }
     printf("해당 이름의 학생을 찾을 수 없습니다: %s\n", name);
 }
-
 
 // 학생 전체 출력 함수
 void print_all_students() {
