@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-// ÇÐ»ý ±¸Á¶Ã¼ Á¤ÀÇ
-struct student {
+// ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+struct student
+{
     char name[50];
     int age;
     char sex[3];
@@ -14,20 +15,22 @@ struct student {
     char department[50];
     int schoolYear;
     int schoolNumber;
-    struct student* next; // ¿¬°á ¸®½ºÆ® Æ÷ÀÎÅÍ
+    struct student *next; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
 
-// Àü¿ª º¯¼ö Á¤ÀÇ
-struct student* head = NULL; // ¸®½ºÆ® ½ÃÀÛ ´õ¹Ì ³ëµå
-struct student* tail = NULL; // ¸®½ºÆ® ³¡ ´õ¹Ì ³ëµå
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+struct student *head = NULL; // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+struct student *tail = NULL; // ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 
-// ÇÐ»ý »ý¼º ÇÔ¼ö
-struct student* create_student(char* name, int age, char* sex, char* phoneNumber,
-    char* position, char* birth, char* department,
-    int schoolYear, int schoolNumber) {
-    struct student* new_student = (struct student*)malloc(sizeof(struct student));
-    if (!new_student) {
-        printf("¸Þ¸ð¸® ÇÒ´ç ½ÇÆÐ\n");
+// ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+struct student *create_student(char *name, int age, char *sex, char *phoneNumber,
+                               char *position, char *birth, char *department,
+                               int schoolYear, int schoolNumber)
+{
+    struct student *new_student = (struct student *)malloc(sizeof(struct student));
+    if (!new_student)
+    {
+        printf("ï¿½Þ¸ï¿½ ï¿½Ò´ï¿½ ï¿½ï¿½ï¿½ï¿½\n");
         return NULL;
     }
 
@@ -45,243 +48,279 @@ struct student* create_student(char* name, int age, char* sex, char* phoneNumber
     return new_student;
 }
 
-// ÃÊ±âÈ­ ÇÔ¼ö
-void make_student() {
-    head = (struct student*)malloc(sizeof(struct student));
-    tail = (struct student*)malloc(sizeof(struct student));
-    if (!head || !tail) {
-        printf("¸Þ¸ð¸® ÇÒ´ç ½ÇÆÐ\n");
+// ï¿½Ê±ï¿½È­ ï¿½Ô¼ï¿½
+void make_student()
+{
+    head = (struct student *)malloc(sizeof(struct student));
+    tail = (struct student *)malloc(sizeof(struct student));
+    if (!head || !tail)
+    {
+        printf("ï¿½Þ¸ï¿½ ï¿½Ò´ï¿½ ï¿½ï¿½ï¿½ï¿½\n");
         exit(1);
     }
     head->next = tail;
     tail->next = NULL;
 }
 
-// ÀÔ·Â À¯È¿¼º °Ë»ç ÇÔ¼ö: ºó ÀÔ·Â ¹æÁö
-void validate_input(const char* prompt, char* input, size_t size) {
-    do {
+// ï¿½Ô·ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½Ô¼ï¿½: ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½
+void validate_input(const char *prompt, char *input, size_t size)
+{
+    do
+    {
         printf("%s", prompt);
         fgets(input, size, stdin);
-        input[strcspn(input, "\n")] = '\0'; // °³Çà ¹®ÀÚ Á¦°Å
-        if (strlen(input) == 0) {
-            printf("ÀÔ·Â°ªÀÌ ºñ¾î ÀÖ½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+        input[strcspn(input, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        if (strlen(input) == 0)
+        {
+            printf("ï¿½Ô·Â°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.\n");
         }
     } while (strlen(input) == 0);
 }
 
-// ÀüÈ­¹øÈ£ À¯È¿¼º °Ë»ç ÇÔ¼ö
-void validate_phone(char* phoneNumber) {
-    do {
-        validate_input("ÀüÈ­¹øÈ£ (¿¹: 010-1234-5678): ", phoneNumber, 20);
-        if (strchr(phoneNumber, '-') == NULL) {
-            printf("ÀüÈ­¹øÈ£¿¡ '-'°¡ Æ÷ÇÔµÇ¾î¾ß ÇÕ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+// ï¿½ï¿½È­ï¿½ï¿½È£ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½Ô¼ï¿½
+void validate_phone(char *phoneNumber)
+{
+    do
+    {
+        validate_input("ï¿½ï¿½È­ï¿½ï¿½È£ (ï¿½ï¿½: 010-1234-5678): ", phoneNumber, 20);
+        if (strchr(phoneNumber, '-') == NULL)
+        {
+            printf("ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ '-'ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.\n");
         }
     } while (strchr(phoneNumber, '-') == NULL);
 }
 
-// »ý³â¿ùÀÏ À¯È¿¼º °Ë»ç ÇÔ¼ö
-void validate_birth(char* birth) {
-    do {
-        validate_input("»ýÀÏ (¿¹: 2004.01.01 or 2004/01/01): ", birth, 11);
-        if (strchr(birth, '.') == NULL && strchr(birth, '/') == NULL) {
-            printf("»ýÀÏ¿¡ '.' ¶Ç´Â '/'°¡ Æ÷ÇÔµÇ¾î¾ß ÇÕ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½ ï¿½Ô¼ï¿½
+void validate_birth(char *birth)
+{
+    do
+    {
+        validate_input("ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½: 2004.01.01 or 2004/01/01): ", birth, 11);
+        if (strchr(birth, '.') == NULL && strchr(birth, '/') == NULL)
+        {
+            printf("ï¿½ï¿½ï¿½Ï¿ï¿½ '.' ï¿½Ç´ï¿½ '/'ï¿½ï¿½ ï¿½ï¿½ï¿½ÔµÇ¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.\n");
         }
     } while (strchr(birth, '.') == NULL && strchr(birth, '/') == NULL);
 }
 
-// ÇÐ»ý Ãß°¡ ÇÔ¼ö
-void insert_student() {
+// ï¿½Ð»ï¿½ ï¿½ß°ï¿½ ï¿½Ô¼ï¿½
+void insert_student()
+{
     char name[50], sex[3], phoneNumber[20], position[30], birth[11], department[50];
     int age, schoolYear, schoolNumber;
 
-    validate_input("ÀÌ¸§: ", name, 50);
+    validate_input("ï¿½Ì¸ï¿½: ", name, 50);
 
-    printf("³ªÀÌ: ");
-    while (scanf("%d", &age) != 1) {
-        printf("¼ýÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä. ´Ù½Ã ÀÔ·Â: ");
-        while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    printf("ï¿½ï¿½ï¿½ï¿½: ");
+    while (scanf("%d", &age) != 1)
+    {
+        printf("ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. ï¿½Ù½ï¿½ ï¿½Ô·ï¿½: ");
+        while (getchar() != '\n')
+            ; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
-    while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    while (getchar() != '\n')
+        ; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    validate_input("¼ºº° (³²/¿©): ", sex, 3);
+    validate_input("ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½/ï¿½ï¿½): ", sex, 3);
     validate_phone(phoneNumber);
-    validate_input("Á÷À§: ", position, 30);
+    validate_input("ï¿½ï¿½ï¿½ï¿½: ", position, 30);
     validate_birth(birth);
-    validate_input("ÇÐ°ú: ", department, 50);
+    validate_input("ï¿½Ð°ï¿½: ", department, 50);
 
-    printf("ÇÐ³â: ");
-    while (scanf("%d", &schoolYear) != 1) {
-        printf("¼ýÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä. ´Ù½Ã ÀÔ·Â: ");
-        while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    printf("ï¿½Ð³ï¿½: ");
+    while (scanf("%d", &schoolYear) != 1)
+    {
+        printf("ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. ï¿½Ù½ï¿½ ï¿½Ô·ï¿½: ");
+        while (getchar() != '\n')
+            ; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
-    while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    while (getchar() != '\n')
+        ; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    printf("ÇÐ¹ø: ");
-    while (scanf("%d", &schoolNumber) != 1) {
-        printf("¼ýÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä. ´Ù½Ã ÀÔ·Â: ");
-        while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    printf("ï¿½Ð¹ï¿½: ");
+    while (scanf("%d", &schoolNumber) != 1)
+    {
+        printf("ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. ï¿½Ù½ï¿½ ï¿½Ô·ï¿½: ");
+        while (getchar() != '\n')
+            ; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
-    while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    while (getchar() != '\n')
+        ; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    struct student* new_student = create_student(name, age, sex, phoneNumber, position, birth, department, schoolYear, schoolNumber);
-    if (!new_student) return;
+    struct student *new_student = create_student(name, age, sex, phoneNumber, position, birth, department, schoolYear, schoolNumber);
+    if (!new_student)
+        return;
 
     new_student->next = head->next;
     head->next = new_student;
-    printf("ÇÐ»ýÀÌ Ãß°¡µÇ¾ú½À´Ï´Ù: %s\n", name);
+    printf("ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½: %s\n", name);
 }
 
-// ÇÐ»ý »èÁ¦ ÇÔ¼ö
-void delete_student() {
+// ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+void delete_student()
+{
     char name[50];
-    printf("»èÁ¦ÇÒ ÇÐ»ýÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä: ");
-    fgets(name, 50, stdin);  // fgets·Î ÀÔ·Â ¹Þ±â
-    name[strcspn(name, "\n")] = '\0';  // °³Çà ¹®ÀÚ Á¦°Å
+    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+    fgets(name, 50, stdin);           // fgetsï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Þ±ï¿½
+    name[strcspn(name, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // °ø¹é ÀÔ·Â È®ÀÎ
-    if (strlen(name) == 0) {
-        printf("°æ°í: ÀÌ¸§Àº °ø¹éÀÌ ¾Æ´Ï¾î¾ß ÇÕ´Ï´Ù. ´Ù½Ã ¸Þ´º·Î µ¹¾Æ°©´Ï´Ù.\n");
-        return;  // ¸Þ´º·Î µ¹¾Æ°¨
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ È®ï¿½ï¿½
+    if (strlen(name) == 0)
+    {
+        printf("ï¿½ï¿½ï¿½: ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Þ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½Ï´ï¿½.\n");
+        return; // ï¿½Þ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
     }
 
-    struct student* prev = head;
-    struct student* current = head->next;
+    struct student *prev = head;
+    struct student *current = head->next;
 
-    while (current != tail) {
-        if (strcmp(current->name, name) == 0) {
+    while (current != tail)
+    {
+        if (strcmp(current->name, name) == 0)
+        {
             prev->next = current->next;
             free(current);
-            printf("ÇÐ»ýÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù: %s\n", name);
+            printf("ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½: %s\n", name);
             return;
         }
         prev = current;
         current = current->next;
     }
-    printf("ÇØ´ç ÀÌ¸§ÀÇ ÇÐ»ýÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù: %s\n", name);
+    printf("ï¿½Ø´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½: %s\n", name);
 }
 
-// ÇÐ»ý °Ë»ö ÇÔ¼ö
-void search_student() {
+// ï¿½Ð»ï¿½ ï¿½Ë»ï¿½ ï¿½Ô¼ï¿½
+void search_student()
+{
     int choice;
     char query[50];
 
-    printf("\n=== ÇÐ»ý °Ë»ö ===\n");
-    printf("1. ÀÌ¸§À¸·Î °Ë»ö\n");
-    printf("2. ³ªÀÌ·Î °Ë»ö\n");
-    printf("3. ¼ºº°·Î °Ë»ö\n");
-    printf("4. ÀüÈ­¹øÈ£·Î °Ë»ö\n");
-    printf("5. ÇÐ°ú·Î °Ë»ö\n");
-    printf("¿øÇÏ´Â °Ë»ö Ä«Å×°í¸® ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
+    printf("\n=== ï¿½Ð»ï¿½ ï¿½Ë»ï¿½ ===\n");
+    printf("1. ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½\n");
+    printf("2. ï¿½ï¿½ï¿½Ì·ï¿½ ï¿½Ë»ï¿½\n");
+    printf("3. ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½\n");
+    printf("4. ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ë»ï¿½\n");
+    printf("5. ï¿½Ð°ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½\n");
+    printf("ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Ë»ï¿½ Ä«ï¿½×°ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
     scanf("%d", &choice);
-    while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+    while (getchar() != '\n')
+        ; // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    switch (choice) {
+    switch (choice)
+    {
     case 1:
-        printf("°Ë»öÇÒ ÇÐ»ýÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä: ");
-        fgets(query, 50, stdin);  // ÀÌ¸§ ÀÔ·Â
-        query[strcspn(query, "\n")] = '\0';  // °³Çà ¹®ÀÚ Á¦°Å
+        printf("ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+        fgets(query, 50, stdin);            // ï¿½Ì¸ï¿½ ï¿½Ô·ï¿½
+        query[strcspn(query, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         break;
     case 2:
-        printf("°Ë»öÇÒ ÇÐ»ýÀÇ ³ªÀÌ¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
-        fgets(query, 50, stdin);  // ³ªÀÌ ÀÔ·Â
-        query[strcspn(query, "\n")] = '\0';  // °³Çà ¹®ÀÚ Á¦°Å
+        printf("ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+        fgets(query, 50, stdin);            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+        query[strcspn(query, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         break;
     case 3:
-        printf("°Ë»öÇÒ ÇÐ»ýÀÇ ¼ºº°À» ÀÔ·ÂÇÏ¼¼¿ä (³²/¿©): ");
-        fgets(query, 50, stdin);  // ¼ºº° ÀÔ·Â
-        query[strcspn(query, "\n")] = '\0';  // °³Çà ¹®ÀÚ Á¦°Å
+        printf("ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½ (ï¿½ï¿½/ï¿½ï¿½): ");
+        fgets(query, 50, stdin);            // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+        query[strcspn(query, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         break;
     case 4:
-        printf("°Ë»öÇÒ ÇÐ»ýÀÇ ÀüÈ­¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
-        fgets(query, 50, stdin);  // ÀüÈ­¹øÈ£ ÀÔ·Â
-        query[strcspn(query, "\n")] = '\0';  // °³Çà ¹®ÀÚ Á¦°Å
+        printf("ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+        fgets(query, 50, stdin);            // ï¿½ï¿½È­ï¿½ï¿½È£ ï¿½Ô·ï¿½
+        query[strcspn(query, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         break;
     case 5:
-        printf("°Ë»öÇÒ ÇÐ»ýÀÇ ÇÐ°ú¸¦ ÀÔ·ÂÇÏ¼¼¿ä: ");
-        fgets(query, 50, stdin);  // ÇÐ°ú ÀÔ·Â
-        query[strcspn(query, "\n")] = '\0';  // °³Çà ¹®ÀÚ Á¦°Å
+        printf("ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½Ð°ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+        fgets(query, 50, stdin);            // ï¿½Ð°ï¿½ ï¿½Ô·ï¿½
+        query[strcspn(query, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         break;
     default:
-        printf("Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù. ¸Þ´º·Î µ¹¾Æ°©´Ï´Ù.\n");
-        return;  // ¸Þ´º·Î µ¹¾Æ°¨
+        printf("ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½Þ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½Ï´ï¿½.\n");
+        return; // ï¿½Þ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
     }
 
-    struct student* current = head->next;
+    struct student *current = head->next;
 
-    while (current != tail) {
-        switch (choice) {
-        case 1:  // ÀÌ¸§À¸·Î °Ë»ö
-            if (strcmp(current->name, query) == 0) {
-                printf("\n=== ÇÐ»ý Á¤º¸ ===\n");
-                printf("ÀÌ¸§: %s\n", current->name);
-                printf("³ªÀÌ: %d\n", current->age);
-                printf("¼ºº°: %s\n", current->sex);
-                printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-                printf("Á÷À§: %s\n", current->position);
-                printf("»ýÀÏ: %s\n", current->birth);
-                printf("ÇÐ°ú: %s\n", current->department);
-                printf("ÇÐ³â: %d\n", current->schoolYear);
-                printf("ÇÐ¹ø: %d\n", current->schoolNumber);
+    while (current != tail)
+    {
+        switch (choice)
+        {
+        case 1: // ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
+            if (strcmp(current->name, query) == 0)
+            {
+                printf("\n=== ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ===\n");
+                printf("ï¿½Ì¸ï¿½: %s\n", current->name);
+                printf("ï¿½ï¿½ï¿½ï¿½: %d\n", current->age);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->sex);
+                printf("ï¿½ï¿½È­ï¿½ï¿½È£: %s\n", current->phoneNumber);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->position);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->birth);
+                printf("ï¿½Ð°ï¿½: %s\n", current->department);
+                printf("ï¿½Ð³ï¿½: %d\n", current->schoolYear);
+                printf("ï¿½Ð¹ï¿½: %d\n", current->schoolNumber);
                 return;
             }
             break;
-        case 2:  // ³ªÀÌ·Î °Ë»ö
-            if (current->age == atoi(query)) {
-                printf("\n=== ÇÐ»ý Á¤º¸ ===\n");
-                printf("ÀÌ¸§: %s\n", current->name);
-                printf("³ªÀÌ: %d\n", current->age);
-                printf("¼ºº°: %s\n", current->sex);
-                printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-                printf("Á÷À§: %s\n", current->position);
-                printf("»ýÀÏ: %s\n", current->birth);
-                printf("ÇÐ°ú: %s\n", current->department);
-                printf("ÇÐ³â: %d\n", current->schoolYear);
-                printf("ÇÐ¹ø: %d\n", current->schoolNumber);
+        case 2: // ï¿½ï¿½ï¿½Ì·ï¿½ ï¿½Ë»ï¿½
+            if (current->age == atoi(query))
+            {
+                printf("\n=== ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ===\n");
+                printf("ï¿½Ì¸ï¿½: %s\n", current->name);
+                printf("ï¿½ï¿½ï¿½ï¿½: %d\n", current->age);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->sex);
+                printf("ï¿½ï¿½È­ï¿½ï¿½È£: %s\n", current->phoneNumber);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->position);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->birth);
+                printf("ï¿½Ð°ï¿½: %s\n", current->department);
+                printf("ï¿½Ð³ï¿½: %d\n", current->schoolYear);
+                printf("ï¿½Ð¹ï¿½: %d\n", current->schoolNumber);
                 return;
             }
             break;
-        case 3:  // ¼ºº°·Î °Ë»ö
-            if (strcmp(current->sex, query) == 0) {
-                printf("\n=== ÇÐ»ý Á¤º¸ ===\n");
-                printf("ÀÌ¸§: %s\n", current->name);
-                printf("³ªÀÌ: %d\n", current->age);
-                printf("¼ºº°: %s\n", current->sex);
-                printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-                printf("Á÷À§: %s\n", current->position);
-                printf("»ýÀÏ: %s\n", current->birth);
-                printf("ÇÐ°ú: %s\n", current->department);
-                printf("ÇÐ³â: %d\n", current->schoolYear);
-                printf("ÇÐ¹ø: %d\n", current->schoolNumber);
+        case 3: // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
+            if (strcmp(current->sex, query) == 0)
+            {
+                printf("\n=== ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ===\n");
+                printf("ï¿½Ì¸ï¿½: %s\n", current->name);
+                printf("ï¿½ï¿½ï¿½ï¿½: %d\n", current->age);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->sex);
+                printf("ï¿½ï¿½È­ï¿½ï¿½È£: %s\n", current->phoneNumber);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->position);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->birth);
+                printf("ï¿½Ð°ï¿½: %s\n", current->department);
+                printf("ï¿½Ð³ï¿½: %d\n", current->schoolYear);
+                printf("ï¿½Ð¹ï¿½: %d\n", current->schoolNumber);
                 return;
             }
             break;
-        case 4:  // ÀüÈ­¹øÈ£·Î °Ë»ö
-            if (strcmp(current->phoneNumber, query) == 0) {
-                printf("\n=== ÇÐ»ý Á¤º¸ ===\n");
-                printf("ÀÌ¸§: %s\n", current->name);
-                printf("³ªÀÌ: %d\n", current->age);
-                printf("¼ºº°: %s\n", current->sex);
-                printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-                printf("Á÷À§: %s\n", current->position);
-                printf("»ýÀÏ: %s\n", current->birth);
-                printf("ÇÐ°ú: %s\n", current->department);
-                printf("ÇÐ³â: %d\n", current->schoolYear);
-                printf("ÇÐ¹ø: %d\n", current->schoolNumber);
+        case 4: // ï¿½ï¿½È­ï¿½ï¿½È£ï¿½ï¿½ ï¿½Ë»ï¿½
+            if (strcmp(current->phoneNumber, query) == 0)
+            {
+                printf("\n=== ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ===\n");
+                printf("ï¿½Ì¸ï¿½: %s\n", current->name);
+                printf("ï¿½ï¿½ï¿½ï¿½: %d\n", current->age);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->sex);
+                printf("ï¿½ï¿½È­ï¿½ï¿½È£: %s\n", current->phoneNumber);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->position);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->birth);
+                printf("ï¿½Ð°ï¿½: %s\n", current->department);
+                printf("ï¿½Ð³ï¿½: %d\n", current->schoolYear);
+                printf("ï¿½Ð¹ï¿½: %d\n", current->schoolNumber);
                 return;
             }
             break;
-        case 5:  // ÇÐ°ú·Î °Ë»ö
-            if (strcmp(current->department, query) == 0) {
-                printf("\n=== ÇÐ»ý Á¤º¸ ===\n");
-                printf("ÀÌ¸§: %s\n", current->name);
-                printf("³ªÀÌ: %d\n", current->age);
-                printf("¼ºº°: %s\n", current->sex);
-                printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-                printf("Á÷À§: %s\n", current->position);
-                printf("»ýÀÏ: %s\n", current->birth);
-                printf("ÇÐ°ú: %s\n", current->department);
-                printf("ÇÐ³â: %d\n", current->schoolYear);
-                printf("ÇÐ¹ø: %d\n", current->schoolNumber);
+        case 5: // ï¿½Ð°ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½
+            if (strcmp(current->department, query) == 0)
+            {
+                printf("\n=== ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ===\n");
+                printf("ï¿½Ì¸ï¿½: %s\n", current->name);
+                printf("ï¿½ï¿½ï¿½ï¿½: %d\n", current->age);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->sex);
+                printf("ï¿½ï¿½È­ï¿½ï¿½È£: %s\n", current->phoneNumber);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->position);
+                printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->birth);
+                printf("ï¿½Ð°ï¿½: %s\n", current->department);
+                printf("ï¿½Ð³ï¿½: %d\n", current->schoolYear);
+                printf("ï¿½Ð¹ï¿½: %d\n", current->schoolNumber);
                 return;
             }
             break;
@@ -289,121 +328,131 @@ void search_student() {
         current = current->next;
     }
 
-    printf("ÇØ´ç Á¶°Ç¿¡ ¸Â´Â ÇÐ»ýÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù.\n");
+    printf("ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½Ç¿ï¿½ ï¿½Â´ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.\n");
 }
 
-
-
-// ÇÐ»ý Á¤º¸ ¼öÁ¤ ÇÔ¼ö
-void update_student() {
+// ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+void update_student()
+{
     char name[50];
-    printf("¼öÁ¤ÇÒ ÇÐ»ýÀÇ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä: ");
-    fgets(name, 50, stdin);  // fgets·Î ÀÔ·Â ¹Þ±â
-    name[strcspn(name, "\n")] = '\0';  // °³Çà ¹®ÀÚ Á¦°Å
+    printf("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½: ");
+    fgets(name, 50, stdin);           // fgetsï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Þ±ï¿½
+    name[strcspn(name, "\n")] = '\0'; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-    // °ø¹é ÀÔ·Â È®ÀÎ
-    if (strlen(name) == 0) {
-        printf("°æ°í: ÀÌ¸§Àº °ø¹éÀÌ ¾Æ´Ï¾î¾ß ÇÕ´Ï´Ù. ´Ù½Ã ¸Þ´º·Î µ¹¾Æ°©´Ï´Ù.\n");
-        return;  // ¸Þ´º·Î µ¹¾Æ°¨
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ È®ï¿½ï¿½
+    if (strlen(name) == 0)
+    {
+        printf("ï¿½ï¿½ï¿½: ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¾ï¿½ï¿½ ï¿½Õ´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Þ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½ï¿½Ï´ï¿½.\n");
+        return; // ï¿½Þ´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
     }
 
-    struct student* current = head->next;
+    struct student *current = head->next;
 
-    while (current != tail) {
-        if (strcmp(current->name, name) == 0) {
-            printf("\n=== ÇöÀç Á¤º¸ ===\n");
-            printf("ÀÌ¸§: %s\n", current->name);
-            printf("³ªÀÌ: %d\n", current->age);
-            printf("¼ºº°: %s\n", current->sex);
-            printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-            printf("Á÷À§: %s\n", current->position);
-            printf("»ýÀÏ: %s\n", current->birth);
-            printf("ÇÐ°ú: %s\n", current->department);
-            printf("ÇÐ³â: %d\n", current->schoolYear);
-            printf("ÇÐ¹ø: %d\n", current->schoolNumber);
+    while (current != tail)
+    {
+        if (strcmp(current->name, name) == 0)
+        {
+            printf("\n=== ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ===\n");
+            printf("ï¿½Ì¸ï¿½: %s\n", current->name);
+            printf("ï¿½ï¿½ï¿½ï¿½: %d\n", current->age);
+            printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->sex);
+            printf("ï¿½ï¿½È­ï¿½ï¿½È£: %s\n", current->phoneNumber);
+            printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->position);
+            printf("ï¿½ï¿½ï¿½ï¿½: %s\n", current->birth);
+            printf("ï¿½Ð°ï¿½: %s\n", current->department);
+            printf("ï¿½Ð³ï¿½: %d\n", current->schoolYear);
+            printf("ï¿½Ð¹ï¿½: %d\n", current->schoolNumber);
 
-            printf("\n=== »õ Á¤º¸ ÀÔ·Â ===\n");
-            printf("³ªÀÌ: ");
+            printf("\n=== ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ===\n");
+            printf("ï¿½ï¿½ï¿½ï¿½: ");
             scanf("%d", &current->age);
-            printf("¼ºº° (³²/¿©): ");
+            printf("ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½/ï¿½ï¿½): ");
             scanf("%s", current->sex);
-            printf("ÀüÈ­¹øÈ£ (¿¹: 010-0000-1111): ");
+            printf("ï¿½ï¿½È­ï¿½ï¿½È£ (ï¿½ï¿½: 010-0000-1111): ");
             scanf("%s", current->phoneNumber);
-            printf("Á÷À§: ");
+            printf("ï¿½ï¿½ï¿½ï¿½: ");
             scanf("%s", current->position);
-            printf("»ýÀÏ (¿¹: 2004.07.25): ");
+            printf("ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½: 2004.07.25): ");
             scanf("%s", current->birth);
-            printf("ÇÐ°ú: ");
+            printf("ï¿½Ð°ï¿½: ");
             scanf("%s", current->department);
-            printf("ÇÐ³â: ");
+            printf("ï¿½Ð³ï¿½: ");
             scanf("%d", &current->schoolYear);
-            printf("ÇÐ¹ø: ");
+            printf("ï¿½Ð¹ï¿½: ");
             scanf("%d", &current->schoolNumber);
 
-            printf("ÇÐ»ý Á¤º¸°¡ ¼öÁ¤µÇ¾ú½À´Ï´Ù: %s\n", current->name);
+            printf("ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½: %s\n", current->name);
             return;
         }
         current = current->next;
     }
-    printf("ÇØ´ç ÀÌ¸§ÀÇ ÇÐ»ýÀ» Ã£À» ¼ö ¾ø½À´Ï´Ù: %s\n", name);
+    printf("ï¿½Ø´ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½: %s\n", name);
 }
 
-
-// ÇÐ»ý ÀüÃ¼ Ãâ·Â ÇÔ¼ö
-void print_all_students() {
-    struct student* s = head->next;
-    if (s == tail) {
-        printf("ÇöÀç µî·ÏµÈ ÇÐ»ýÀÌ ¾ø½À´Ï´Ù.\n");
+// ï¿½Ð»ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+void print_all_students()
+{
+    struct student *s = head->next;
+    if (s == tail)
+    {
+        printf("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ïµï¿½ ï¿½Ð»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.\n");
         return;
     }
 
-    printf("\n===== ÀüÃ¼ ÇÐ»ý ¸ñ·Ï =====\n");
-    while (s != tail) {
-        printf("\n=== ÇÐ»ý Á¤º¸ ===\n");
-        printf("ÀÌ¸§: %s\n", s->name);
-        printf("³ªÀÌ: %d\n", s->age);
-        printf("¼ºº°: %s\n", s->sex);
-        printf("ÀüÈ­¹øÈ£: %s\n", s->phoneNumber);
-        printf("Á÷À§: %s\n", s->position);
-        printf("»ýÀÏ: %s\n", s->birth);
-        printf("ÇÐ°ú: %s\n", s->department);
-        printf("ÇÐ³â: %d\n", s->schoolYear);
-        printf("ÇÐ¹ø: %d\n", s->schoolNumber);
+    printf("\n===== ï¿½ï¿½Ã¼ ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ =====\n");
+    while (s != tail)
+    {
+        printf("\n=== ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ===\n");
+        printf("ï¿½Ì¸ï¿½: %s\n", s->name);
+        printf("ï¿½ï¿½ï¿½ï¿½: %d\n", s->age);
+        printf("ï¿½ï¿½ï¿½ï¿½: %s\n", s->sex);
+        printf("ï¿½ï¿½È­ï¿½ï¿½È£: %s\n", s->phoneNumber);
+        printf("ï¿½ï¿½ï¿½ï¿½: %s\n", s->position);
+        printf("ï¿½ï¿½ï¿½ï¿½: %s\n", s->birth);
+        printf("ï¿½Ð°ï¿½: %s\n", s->department);
+        printf("ï¿½Ð³ï¿½: %d\n", s->schoolYear);
+        printf("ï¿½Ð¹ï¿½: %d\n", s->schoolNumber);
         s = s->next;
     }
     printf("==========================\n\n");
 }
 
-// ¸Þ´º Ãâ·Â ÇÔ¼ö
-void menu_display() {
-    printf("\n===== ¸Þ´º =====\n");
-    printf("A. ÇÐ»ý Ãß°¡\n");
-    printf("D. ÇÐ»ý »èÁ¦\n");
-    printf("S. ÇÐ»ý °Ë»ö\n");
-    printf("U. ÇÐ»ý Á¤º¸ ¼öÁ¤\n");
-    printf("P. ÇÐ»ý ÀüÃ¼ Ãâ·Â\n");
-    printf("Q. ÇÁ·Î±×·¥ Á¾·á\n");
+// ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+void menu_display()
+{
+    printf("\n===== ï¿½Þ´ï¿½ =====\n");
+    printf("A. ï¿½Ð»ï¿½ ï¿½ß°ï¿½\n");
+    printf("D. ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½\n");
+    printf("S. ï¿½Ð»ï¿½ ï¿½Ë»ï¿½\n");
+    printf("U. ï¿½Ð»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½\n");
+    printf("P. ï¿½Ð»ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½\n");
+    printf("Q. ï¿½ï¿½ï¿½Î±×·ï¿½ ï¿½ï¿½ï¿½ï¿½\n");
     printf("=================\n");
 }
 
-// ¸ÞÀÎ ÇÔ¼ö
-int main() {
+// ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¼ï¿½
+int main()
+{
     char command;
-    make_student(); // ÃÊ±âÈ­
+    make_student(); // ï¿½Ê±ï¿½È­
 
-    do {
+    do
+    {
         menu_display();
-        printf("¸í·É¾î¸¦ ÀÔ·ÂÇÏ½Ã¿À: ");
+        printf("ï¿½ï¿½ï¿½É¾î¸¦ ï¿½Ô·ï¿½ï¿½Ï½Ã¿ï¿½: ");
         command = getchar();
-        while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+        while (getchar() != '\n')
+            ; // ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
-        // °ø¹éÀ¸·Î ¸í·É¾î°¡ ÀÔ·ÂµÈ °æ¿ì °æ°í ¸Þ½ÃÁö Ãâ·Â
-        if (command == ' ' || command == '\t' || command == '\n') {
-            printf("°æ°í: ¸í·É¾î´Â °ø¹éÀÌ ¾Æ´Ñ °ªÀ» ÀÔ·ÂÇØ¾ß ÇÕ´Ï´Ù.\n");
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¾î°¡ ï¿½Ô·Âµï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+        if (command == ' ' || command == '\t' || command == '\n')
+        {
+            printf("ï¿½ï¿½ï¿½: ï¿½ï¿½ï¿½É¾ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ø¾ï¿½ ï¿½Õ´Ï´ï¿½.\n");
             continue;
         }
 
-        switch (command) {
+        switch (command)
+        {
         case 'A':
         case 'a':
             insert_student();
@@ -431,11 +480,11 @@ int main() {
 
         case 'Q':
         case 'q':
-            printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
+            printf("ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.\n");
             break;
 
         default:
-            printf("Àß¸øµÈ ¸í·É¾îÀÔ´Ï´Ù.\n");
+            printf("ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¾ï¿½ï¿½Ô´Ï´ï¿½.\n");
             break;
         }
     } while (command != 'q' && command != 'Q');
