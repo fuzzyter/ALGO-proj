@@ -354,7 +354,7 @@ print_rectureRoom_rental()
     Meeting *meetings = (Meeting *)malloc(t * sizeof(Meeting));
     if (!meetings)
     {
-        perror("Memory allocation failed");
+        perror("메모리 할당 실패");
         return 1;
     }
 
