@@ -18,6 +18,13 @@ struct student
 struct student *head = NULL; // 리스트 시작 더미 노드
 struct student *tail = NULL; // 리스트 끝 더미 노드
 
+// 회의 정보를 저장할 구조체
+typedef struct
+{
+    int start; // 시작 시간
+    int end;   // 종료 시간
+} Meeting;
+
 // 학생 생성 함수
 struct student *create_student(char *name, char *phoneNumber, char *department, int schoolYear, int schoolNumber)
 {
@@ -170,10 +177,8 @@ void search_student()
 
     printf("\n=== 학생 검색 ===\n");
     printf("1. 이름으로 검색\n");
-    printf("2. 나이로 검색\n");
-    printf("3. 성별로 검색\n");
-    printf("4. 전화번호로 검색\n");
-    printf("5. 학과로 검색\n");
+    printf("2. 전화번호로 검색\n");
+    printf("3. 학과로 검색\n");
     printf("원하는 검색 카테고리 번호를 입력하세요: ");
     scanf("%d", &choice);
     while (getchar() != '\n')
@@ -298,34 +303,34 @@ void update_student()
 }
 
 // 학생 전체 출력 함수
-void print_all_students()
-{
-    struct student *s = head->next;
-    if (s == tail)
-    {
-        printf("현재 등록된 학생이 없습니다.\n");
-        return;
-    }
+// void print_all_students()
+// {
+//     struct student *s = head->next;
+//     if (s == tail)
+//     {
+//         printf("현재 등록된 학생이 없습니다.\n");
+//         return;
+//     }
 
-    printf("\n===== 전체 학생 목록 =====\n");
-    while (s != tail)
-    {
-        printf("\n=== 학생 정보 ===\n");
-        printf("이름: %s\n", s->name);
-        printf("전화번호: %s\n", s->phoneNumber);
-        printf("학과: %s\n", s->department);
-        printf("학년: %d\n", s->schoolYear);
-        printf("학번: %d\n", s->schoolNumber);
-        s = s->next;
-    }
-    printf("==========================\n\n");
-}
+//     printf("\n===== 전체 학생 목록 =====\n");
+//     while (s != tail)
+//     {
+//         printf("\n=== 학생 정보 ===\n");
+//         printf("이름: %s\n", s->name);
+//         printf("전화번호: %s\n", s->phoneNumber);
+//         printf("학과: %s\n", s->department);
+//         printf("학년: %d\n", s->schoolYear);
+//         printf("학번: %d\n", s->schoolNumber);
+//         s = s->next;
+//     }
+//     printf("==========================\n\n");
+// }
 
 // 메뉴 출력 함수
 void menu_display()
 {
     printf("\n===== 메뉴 =====\n");
-    printf("A. 학생 추가\n");
+    printf("A. 학생 추가(등록)\n");
     printf("D. 학생 삭제\n");
     printf("S. 학생 검색\n");
     printf("U. 학생 정보 수정\n");
