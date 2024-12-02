@@ -1,4 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
+#define MAX_LINE_LENGTH 1024
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -345,10 +347,10 @@ void print_lectureRoom_state()
 {
 }
 
-print_rectureRoom_rental()
+int print_rectureRoom_rental() // 그리디 알고리즘
 {
     int t;
-    printf("회의의 수 입력받기");
+    printf("진행할 회의 수 입력받기 : ");
     scanf("%d", &t); // 회의의 수 입력받기
 
     // 회의 정보를 저장할 배열 동적 할당
@@ -366,10 +368,11 @@ print_rectureRoom_rental()
         scanf("%d", &meetings[i].start);
         printf("회의 종료 시간 : ");
         scanf("%d", &meetings[i].end);
+        printf("\n");
     }
 
     // 회의들을 시작 시간과 종료 시간 기준으로 정렬
-    qsort(meetings, t, sizeof(Meeting), compare);
+    // qsort(meetings, t, sizeof(Meeting), compare); -> 알고리즘에서 배운 정렬방법 택 1해서 정렬
 
     // 이전 회의의 종료 시간을 추적
     int last_end_time = -1;
@@ -392,6 +395,41 @@ print_rectureRoom_rental()
     // 메모리 해제
     free(meetings);
 }
+
+// 명단 파일을 읽고 출력하는 함수
+void readCSVFile(const char *filename)
+{
+    FILE *file = fopen(filename, "r"); // 파일 읽기 모드로 열기
+    if (file == NULL)
+    {
+        printf("파일을 열 수 없습니다.\n");
+        return; // 파일을 열 수 없을 경우 함수 종료
+    }
+
+    char line[MAX_LINE_LENGTH];
+
+    // 첫 번째 줄(헤더) 읽기
+    if (fgets(line, sizeof(line), file))
+    {
+        printf("헤더: %s", line);
+    }
+
+    // 각 행 데이터 읽기
+    while (fgets(line, sizeof(line), file))
+    {
+        char name[50], job[50];
+        int age;
+
+        // 쉼표로 데이터 분리
+        sscanf(line, "%[^,],%d,%[^\n]", name, &age, job);
+
+        // 데이터 출력
+        printf("이름: %s, 나이: %d, 직업: %s\n", name, age, job);
+    }
+
+    fclose(file);
+}
+
 // 메뉴 출력 함수
 void menu_display()
 {
@@ -400,9 +438,9 @@ void menu_display()
     printf("D. 학생 삭제\n");
     printf("S. 학생 검색\n");
     printf("U. 학생 정보 수정\n");
-    printf("E. 강의실 대여");
+    printf("E. 강의실 대여\n");
     printf("P. 강의실 대여 명단 전체 출력\n");
-    printf("I. 강의실 상태 출력");
+    printf("I. 강의실 상태 출력\n");
     printf("Q. 프로그램 종료\n");
     printf("=================\n");
 }
@@ -413,6 +451,10 @@ int main()
     // 디스플레이 메뉴 작동
     char command;
     make_student(); // 초기화
+
+    // csv파일 읽기
+    const char *filename = "명단.csv"; // 파일 이름
+    readCSVFile(filename);             // CSV 파일 읽기 함수 호출
 
     do
     {
