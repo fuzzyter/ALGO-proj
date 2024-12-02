@@ -348,6 +348,7 @@ void print_lectureRoom_state()
 print_rectureRoom_rental()
 {
     int t;
+    printf("회의의 수 입력받기");
     scanf("%d", &t); // 회의의 수 입력받기
 
     // 회의 정보를 저장할 배열 동적 할당
@@ -361,7 +362,10 @@ print_rectureRoom_rental()
     // 회의 정보 입력받기
     for (int i = 0; i < t; i++)
     {
-        scanf("%d %d", &meetings[i].start, &meetings[i].end);
+        printf("회의 시작 시간 : ");
+        scanf("%d", &meetings[i].start);
+        printf("회의 종료 시간 : ");
+        scanf("%d", &meetings[i].end);
     }
 
     // 회의들을 시작 시간과 종료 시간 기준으로 정렬
