@@ -123,19 +123,25 @@ void reserve_lectureRoom()
     while (1)
     {
         // 예약된 시간을 확인해서 출력
-        printf("시작 시간(0-23): ");
-
-        // 예약된 시간이 있는 경우 그 시간대를 출력
+        printf("예약된 시간: ");
         struct Room *current = head->next;
+        int hasReservations = 0; // 예약이 존재하는지 확인하는 플래그
+
         while (current != tail)
         {
             printf("(%d~%d시 예약 있음) ", current->start, current->end);
             current = current->next;
+            hasReservations = 1;
         }
 
-        printf("\n"); // 예약된 시간 리스트 끝나고 한 줄 띄기
+        if (!hasReservations)
+        {
+            printf("없음");
+        }
+        printf("\n");
 
-        // 시작 시간을 입력받음
+        // 시작 시간 입력
+        printf("시작 시간(0-23): ");
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
         if (sscanf(inputBuffer, "%d", &start) == 1 && start >= 0 && start <= 23)
         {
