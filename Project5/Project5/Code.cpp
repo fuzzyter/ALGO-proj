@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// ÇĞ»ı ±¸Á¶Ã¼ Á¤ÀÇ :ÀÌ¸§, ÀüÈ­¹øÈ£, Àü°ø, ÇĞ¹ø, ÇĞ³â
+// í•™ìƒ êµ¬ì¡°ì²´ ì •ì˜ :ì´ë¦„, ì „í™”ë²ˆí˜¸, ì „ê³µ, í•™ë²ˆ, í•™ë…„
 struct Room
 {
     char name[50];
@@ -13,19 +13,20 @@ struct Room
     int schoolNumber;
     int start;
     int end;
-    struct Room* next; // ¿¬°á ¸®½ºÆ® Æ÷ÀÎÅÍ
+    struct Room *next; // ì—°ê²° ë¦¬ìŠ¤íŠ¸ í¬ì¸í„°
 };
 
-// Àü¿ª º¯¼ö Á¤ÀÇ
-struct Room* head = NULL;
-struct Room* tail = NULL; 
+// ì „ì—­ ë³€ìˆ˜ ì •ì˜
+struct Room *head = NULL;
+struct Room *tail = NULL;
 
-// ÇĞ»ı »ı¼º ÇÔ¼ö
-struct Room* create_lectureRoom(char* name, char* phoneNumber, char* department, int schoolYear, int schoolNumber, int start, int end)
+// í•™ìƒ ìƒì„± í•¨ìˆ˜
+struct Room *create_lectureRoom(char *name, char *phoneNumber, char *department, int schoolYear, int schoolNumber, int start, int end)
 {
-    struct Room* new_Room = (struct Room*)malloc(sizeof(struct Room));
-    if (!new_Room) {
-        printf("¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ\n");
+    struct Room *new_Room = (struct Room *)malloc(sizeof(struct Room));
+    if (!new_Room)
+    {
+        printf("ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨\n");
         return NULL;
     }
 
@@ -41,157 +42,181 @@ struct Room* create_lectureRoom(char* name, char* phoneNumber, char* department,
     return new_Room;
 }
 
-// ÃÊ±âÈ­ ÇÔ¼ö
+// ì´ˆê¸°í™” í•¨ìˆ˜
 void make_lectureRoom()
 {
-    head = (struct Room*)malloc(sizeof(struct Room));
+    head = (struct Room *)malloc(sizeof(struct Room));
     if (!head)
     {
-        printf("¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ\n");
+        printf("ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨\n");
         exit(1);
     }
-    head->next = NULL; // ÃÊ±âÈ­ ½Ã head->next¸¦ NULL·Î ¼³Á¤
+    head->next = NULL; // ì´ˆê¸°í™” ì‹œ head->nextë¥¼ NULLë¡œ ì„¤ì •
 }
 
-// ÀÔ·Â À¯È¿¼º °Ë»ç ÇÔ¼ö: ºó ÀÔ·Â ¹æÁö
-void validate_input(const char* prompt, char* input, size_t size)
+// ì…ë ¥ ìœ íš¨ì„± ê²€ì‚¬ í•¨ìˆ˜: ë¹ˆ ì…ë ¥ ë°©ì§€
+void validate_input(const char *prompt, char *input, size_t size)
 {
     do
     {
         printf("%s", prompt);
         fgets(input, size, stdin);
-        input[strcspn(input, "\n")] = '\0'; // °³Çà ¹®ÀÚ Á¦°Å
+        input[strcspn(input, "\n")] = '\0'; // ê°œí–‰ ë¬¸ì ì œê±°
         if (strlen(input) == 0)
         {
-            printf("ÀÔ·Â°ªÀÌ ºñ¾î ÀÖ½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+            printf("ì…ë ¥ê°’ì´ ë¹„ì–´ ìˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
         }
     } while (strlen(input) == 0);
 }
 
-// ÀüÈ­¹øÈ£ À¯È¿¼º °Ë»ç ÇÔ¼ö
-void validate_phone(char* phoneNumber)
+// ì „í™”ë²ˆí˜¸ ìœ íš¨ì„± ê²€ì‚¬ í•¨ìˆ˜
+void validate_phone(char *phoneNumber)
 {
     do
     {
-        validate_input("ÀüÈ­¹øÈ£ (¿¹: 010-1234-5678): ", phoneNumber, 20);
+        validate_input("ì „í™”ë²ˆí˜¸ (ì˜ˆ: 010-1234-5678): ", phoneNumber, 20);
         if (strchr(phoneNumber, '-') == NULL)
         {
-            printf("ÀüÈ­¹øÈ£¿¡ '-'°¡ Æ÷ÇÔµÇ¾î¾ß ÇÕ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä.\n");
+            printf("ì „í™”ë²ˆí˜¸ì— '-'ê°€ í¬í•¨ë˜ì–´ì•¼ í•©ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.\n");
         }
     } while (strchr(phoneNumber, '-') == NULL);
 }
 
-// ÇĞ»ı Ãß°¡ ÇÔ¼ö
-void reserve_lectureRoom() {
+// í•™ìƒ ì¶”ê°€ í•¨ìˆ˜
+void reserve_lectureRoom()
+{
     char name[50], phoneNumber[20], department[50];
     int schoolYear, schoolNumber, start, end;
-    char inputBuffer[50]; // ÀÔ·ÂÀ» ¹ŞÀ» ¹öÆÛ
+    char inputBuffer[50]; // ì…ë ¥ì„ ë°›ì„ ë²„í¼
 
-    // ÀÌ¸§ ÀÔ·Â
-    validate_input("ÀÌ¸§: ", name, 50);
+    // ì´ë¦„ ì…ë ¥
+    validate_input("ì´ë¦„: ", name, 50);
 
-    // ÀüÈ­¹øÈ£ ÀÔ·Â
+    // ì „í™”ë²ˆí˜¸ ì…ë ¥
     validate_phone(phoneNumber);
 
-    // ÇĞ°ú ÀÔ·Â
-    validate_input("ÇĞ°ú: ", department, 50);
+    // í•™ê³¼ ì…ë ¥
+    validate_input("í•™ê³¼: ", department, 50);
 
-    printf("ÇĞ³â: ");
-    while (scanf("%d", &schoolYear) != 1) {
-        printf("¼ıÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä. ´Ù½Ã ÀÔ·Â: ");
-        while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    printf("í•™ë…„: ");
+    while (scanf("%d", &schoolYear) != 1)
+    {
+        printf("ìˆ«ìë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”. ë‹¤ì‹œ ì…ë ¥: ");
+        while (getchar() != '\n')
+            ; // ë²„í¼ ë¹„ìš°ê¸°
     }
-    while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    while (getchar() != '\n')
+        ; // ë²„í¼ ë¹„ìš°ê¸°
 
-    // ÇĞ¹ø ÀÔ·Â
-    printf("ÇĞ¹ø: ");
-    while (scanf("%d", &schoolNumber) != 1) {
-        printf("¼ıÀÚ·Î ÀÔ·ÂÇØÁÖ¼¼¿ä. ´Ù½Ã ÀÔ·Â: ");
-        while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    // í•™ë²ˆ ì…ë ¥
+    printf("í•™ë²ˆ: ");
+    while (scanf("%d", &schoolNumber) != 1)
+    {
+        printf("ìˆ«ìë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”. ë‹¤ì‹œ ì…ë ¥: ");
+        while (getchar() != '\n')
+            ; // ë²„í¼ ë¹„ìš°ê¸°
     }
-    while (getchar() != '\n'); // ¹öÆÛ ºñ¿ì±â
+    while (getchar() != '\n')
+        ; // ë²„í¼ ë¹„ìš°ê¸°
 
-    // ½ÃÀÛ ½Ã°£°ú Á¾·á ½Ã°£ ÀÔ·Â
-    while (1) {
-        printf("½ÃÀÛ ½Ã°£(0-23): ");
+    // ì‹œì‘ ì‹œê°„ê³¼ ì¢…ë£Œ ì‹œê°„ ì…ë ¥
+    while (1)
+    {
+        printf("ì‹œì‘ ì‹œê°„(0-23): ");
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
-        if (sscanf(inputBuffer, "%d", &start) == 1 && start >= 0 && start <= 23) {
+        if (sscanf(inputBuffer, "%d", &start) == 1 && start >= 0 && start <= 23)
+        {
             break;
         }
-        else {
-            printf("À¯È¿ÇÑ ½Ã°£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\n");
+        else
+        {
+            printf("ìœ íš¨í•œ ì‹œê°„ë¥¼ ì…ë ¥í•˜ì„¸ìš”.\n");
         }
     }
 
-    while (1) {
-        printf("Á¾·á ½Ã°£(0-23): ");
+    while (1)
+    {
+        printf("ì¢…ë£Œ ì‹œê°„(0-23): ");
         fgets(inputBuffer, sizeof(inputBuffer), stdin);
-        if (sscanf(inputBuffer, "%d", &end) == 1 && end >= 0 && end <= 23) {
+        if (sscanf(inputBuffer, "%d", &end) == 1 && end >= 0 && end <= 23)
+        {
             break;
         }
-        else {
-            printf("À¯È¿ÇÑ ¼ıÀÚ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\n");
+        else
+        {
+            printf("ìœ íš¨í•œ ìˆ«ìë¥¼ ì…ë ¥í•˜ì„¸ìš”.\n");
         }
     }
 
-    // ¿¹¾à ½Ã°£ °ãÄ§ È®ÀÎ
-    struct Room* current = head->next;
-    while (current != tail) {
-        if ((start < current->end && end > current->start)) {
-            printf("°ãÄ¡´Â ¿¹¾àÀÌ ÀÖ½À´Ï´Ù. ´Ù¸¥ ½Ã°£À» ¼±ÅÃÇÏ¼¼¿ä.\n");
+    // ì˜ˆì•½ ì‹œê°„ ê²¹ì¹¨ í™•ì¸
+    struct Room *current = head->next;
+    while (current != tail)
+    {
+        if ((start < current->end && end > current->start))
+        {
+            printf("ê²¹ì¹˜ëŠ” ì˜ˆì•½ì´ ìˆìŠµë‹ˆë‹¤. ë‹¤ë¥¸ ì‹œê°„ì„ ì„ íƒí•˜ì„¸ìš”.\n");
             return;
         }
-        current = current->next; // ¸®½ºÆ®ÀÇ ´ÙÀ½ °­ÀÇ½Ç·Î ÀÌµ¿
+        current = current->next; // ë¦¬ìŠ¤íŠ¸ì˜ ë‹¤ìŒ ê°•ì˜ì‹¤ë¡œ ì´ë™
     }
 
-    // »õ·Î¿î °­ÀÇ½Ç ¿¹¾à Ãß°¡
-    struct Room* new_Room = create_lectureRoom(name, phoneNumber, department, schoolYear, schoolNumber, start, end);
-    if (!new_Room) {
-        printf("°­ÀÇ½Ç ¿¹¾à Ãß°¡°¡ ½ÇÆĞÇß½À´Ï´Ù.\n");
-        return; // ¸Ş¸ğ¸® ºÎÁ·À¸·Î ¿¹¾àÀ» Áß´Ü
+    // ìƒˆë¡œìš´ ê°•ì˜ì‹¤ ì˜ˆì•½ ì¶”ê°€
+    struct Room *new_Room = create_lectureRoom(name, phoneNumber, department, schoolYear, schoolNumber, start, end);
+    if (!new_Room)
+    {
+        printf("ê°•ì˜ì‹¤ ì˜ˆì•½ ì¶”ê°€ê°€ ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.\n");
+        return; // ë©”ëª¨ë¦¬ ë¶€ì¡±ìœ¼ë¡œ ì˜ˆì•½ì„ ì¤‘ë‹¨
     }
 
-    // »õ ³ëµå¸¦ ¸®½ºÆ®¿¡ Ãß°¡
+    // ìƒˆ ë…¸ë“œë¥¼ ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
     new_Room->next = head->next;
     head->next = new_Room;
-    printf("°­ÀÇ½Ç¿¡ ÇĞ»ıÀÌ Ãß°¡µÇ¾ú½À´Ï´Ù: %s (%d½Ã ~ %d½Ã)\n", name, start, end);
+    printf("ê°•ì˜ì‹¤ì— í•™ìƒì´ ì¶”ê°€ë˜ì—ˆìŠµë‹ˆë‹¤: %s (%dì‹œ ~ %dì‹œ)\n", name, start, end);
 }
 
-// °­ÀÇ½Ç ¿¹¾à »èÁ¦ ÇÔ¼ö
-void delete_lectureRoom() {
+// ê°•ì˜ì‹¤ ì˜ˆì•½ ì‚­ì œ í•¨ìˆ˜
+void delete_lectureRoom()
+{
     int schoolNumber;
-    printf("»èÁ¦ÇÒ ¿¹¾àÀÇ ÇĞ¹øÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+    printf("ì‚­ì œí•  ì˜ˆì•½ì˜ í•™ë²ˆì„ ì…ë ¥í•˜ì„¸ìš”: ");
     scanf("%d", &schoolNumber);
-    while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+    while (getchar() != '\n')
+        ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-    struct Room** indirect = &head->next; // head->nextºÎÅÍ Å½»ö ½ÃÀÛ
-    while (*indirect != NULL) {
-        struct Room* current = *indirect;
-        if (current->schoolNumber == schoolNumber) {
-            printf("¿¹¾àÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù: %s (%d½Ã ~ %d½Ã)\n", current->name, current->start, current->end);
+    struct Room **indirect = &head->next; // head->nextë¶€í„° íƒìƒ‰ ì‹œì‘
+    while (*indirect != NULL)
+    {
+        struct Room *current = *indirect;
+        if (current->schoolNumber == schoolNumber)
+        {
+            printf("ì˜ˆì•½ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤: %s (%dì‹œ ~ %dì‹œ)\n", current->name, current->start, current->end);
 
-            *indirect = current->next; // ³ëµå¸¦ ¸®½ºÆ®¿¡¼­ Á¦°Å
-            free(current); // ¸Ş¸ğ¸® ÇØÁ¦
+            *indirect = current->next; // ë…¸ë“œë¥¼ ë¦¬ìŠ¤íŠ¸ì—ì„œ ì œê±°
+            free(current);             // ë©”ëª¨ë¦¬ í•´ì œ
             return;
         }
-        indirect = &(*indirect)->next; // ´ÙÀ½ ³ëµå·Î ÀÌµ¿
+        indirect = &(*indirect)->next; // ë‹¤ìŒ ë…¸ë“œë¡œ ì´ë™
     }
 
-    printf("ÇØ´ç ÇĞ¹øÀÇ ¿¹¾àÀÌ ¾ø½À´Ï´Ù.\n");
+    printf("í•´ë‹¹ í•™ë²ˆì˜ ì˜ˆì•½ì´ ì—†ìŠµë‹ˆë‹¤.\n");
 }
 
-void sort_lectureRooms() {
-    struct Room* i;
-    struct Room* j;
+void sort_lectureRooms()
+{
+    struct Room *i;
+    struct Room *j;
 
-    for (i = head->next; i != NULL && i->next != NULL; i = i->next) {
-        for (j = i->next; j != NULL; j = j->next) {
-            if (i->start > j->start) {
-                // Æ÷ÀÎÅÍ ±³È¯
+    for (i = head->next; i != NULL && i->next != NULL; i = i->next)
+    {
+        for (j = i->next; j != NULL; j = j->next)
+        {
+            if (i->start > j->start)
+            {
+                // í¬ì¸í„° êµí™˜
                 char temp_name[50], temp_phone[20], temp_department[50];
                 int temp_schoolYear, temp_schoolNumber, temp_start, temp_end;
 
-                // µ¥ÀÌÅÍ ±³È¯
+                // ë°ì´í„° êµí™˜
                 strcpy(temp_name, i->name);
                 strcpy(temp_phone, i->phoneNumber);
                 strcpy(temp_department, i->department);
@@ -220,43 +245,49 @@ void sort_lectureRooms() {
     }
 }
 
-// °­ÀÇ½Ç ¿¹¾à »óÅÂ Ãâ·Â ÇÔ¼ö
-void print_lectureRoom_state() {
+// ê°•ì˜ì‹¤ ì˜ˆì•½ ìƒíƒœ ì¶œë ¥ í•¨ìˆ˜
+void print_lectureRoom_state()
+{
 
-    struct Room* current = head->next;
-    if (current == tail) {
-        printf("ÇöÀç µî·ÏµÈ ¿¹¾àÀÌ ¾ø½À´Ï´Ù.\n");
+    struct Room *current = head->next;
+    if (current == tail)
+    {
+        printf("í˜„ì¬ ë“±ë¡ëœ ì˜ˆì•½ì´ ì—†ìŠµë‹ˆë‹¤.\n");
         return;
     }
 
-    printf("\n=== °­ÀÇ½Ç ¿¹¾à »óÅÂ ===\n");
-    while (current != tail) {
-        printf("ÀÌ¸§: %s\n", current->name);
-        printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-        printf("ÇĞ°ú: %s\n", current->department);
-        printf("ÇĞ³â: %d\n", current->schoolYear);
-        printf("ÇĞ¹ø: %d\n", current->schoolNumber);
-        printf("½ÃÀÛ ½Ã°£: %d\n", current->start);
-        printf("Á¾·á ½Ã°£: %d\n", current->end);
+    printf("\n=== ê°•ì˜ì‹¤ ì˜ˆì•½ ìƒíƒœ ===\n");
+    while (current != tail)
+    {
+        printf("ì´ë¦„: %s\n", current->name);
+        printf("ì „í™”ë²ˆí˜¸: %s\n", current->phoneNumber);
+        printf("í•™ê³¼: %s\n", current->department);
+        printf("í•™ë…„: %d\n", current->schoolYear);
+        printf("í•™ë²ˆ: %d\n", current->schoolNumber);
+        printf("ì‹œì‘ ì‹œê°„: %d\n", current->start);
+        printf("ì¢…ë£Œ ì‹œê°„: %d\n", current->end);
         printf("==========================\n\n");
         current = current->next;
     }
 }
 
-void insertion_sort_Rooms() {
-    struct Room* sorted = NULL;
-    struct Room* current = head->next;
+void insertion_sort_Rooms()
+{
+    struct Room *sorted = NULL;
+    struct Room *current = head->next;
 
-    while (current != tail) {
-        struct Room* next = current->next;
+    while (current != tail)
+    {
+        struct Room *next = current->next;
 
-        // Á¤·ÄµÈ À§Ä¡ Ã£±â
-        struct Room** ptr = &sorted;
-        while (*ptr != NULL && (*ptr)->start < current->start) {
+        // ì •ë ¬ëœ ìœ„ì¹˜ ì°¾ê¸°
+        struct Room **ptr = &sorted;
+        while (*ptr != NULL && (*ptr)->start < current->start)
+        {
             ptr = &((*ptr)->next);
         }
 
-        // ³ëµå »ğÀÔ
+        // ë…¸ë“œ ì‚½ì…
         current->next = *ptr;
         *ptr = current;
 
@@ -266,189 +297,264 @@ void insertion_sort_Rooms() {
     head->next = sorted;
 }
 
-// °­ÀÇ½Ç ¿¹¾à Á¤º¸ ¼öÁ¤ ÇÔ¼ö
-void modify_lectureRoom() {
+// ê°•ì˜ì‹¤ ì˜ˆì•½ ì •ë³´ ìˆ˜ì • í•¨ìˆ˜
+void modify_lectureRoom()
+{
     int schoolNumber;
     char choice;
 
     print_lectureRoom_state();
-    printf("U. ¿¹¾à ¼öÁ¤\n");
-    printf("D. ¿¹¾à »èÁ¦\n");
-    printf("¸í·É¾î¸¦ ÀÔ·ÂÇÏ½Ã¿À: ");
-    scanf(" %c", &choice);  // ¾Õ¿¡ °ø¹é Ãß°¡·Î ¹öÆÛ ¹®Á¦ ¹æÁö
-    while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+    printf("U. ì˜ˆì•½ ìˆ˜ì •\n");
+    printf("D. ì˜ˆì•½ ì‚­ì œ\n");
+    printf("ëª…ë ¹ì–´ë¥¼ ì…ë ¥í•˜ì‹œì˜¤: ");
+    scanf(" %c", &choice); // ì•ì— ê³µë°± ì¶”ê°€ë¡œ ë²„í¼ ë¬¸ì œ ë°©ì§€
+    while (getchar() != '\n')
+        ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-    switch (choice) {
+    switch (choice)
+    {
     case 'D':
-    case 'd': {
-        printf("»èÁ¦ÇÒ ¿¹¾àÀÇ ÇĞ¹øÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+    case 'd':
+    {
+        printf("ì‚­ì œí•  ì˜ˆì•½ì˜ í•™ë²ˆì„ ì…ë ¥í•˜ì„¸ìš”: ");
         scanf("%d", &schoolNumber);
-        while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+        while (getchar() != '\n')
+            ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-        struct Room* current = head->next;
+        struct Room *current = head->next;
 
-        while (current != tail) {
-            if (current->schoolNumber == schoolNumber) {
-                printf("\n=== ÇöÀç Á¤º¸ ===\n");
-                printf("ÀÌ¸§: %s\n", current->name);
-                printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-                printf("ÇĞ°ú: %s\n", current->department);
-                printf("ÇĞ³â: %d\n", current->schoolYear);
-                printf("ÇĞ¹ø: %d\n", current->schoolNumber);
-                printf("½ÃÀÛ ½Ã°£: %d\n", current->start);
-                printf("Á¾·á ½Ã°£: %d\n", current->end);
+        while (current != tail)
+        {
+            if (current->schoolNumber == schoolNumber)
+            {
+                printf("\n=== í˜„ì¬ ì •ë³´ ===\n");
+                printf("ì´ë¦„: %s\n", current->name);
+                printf("ì „í™”ë²ˆí˜¸: %s\n", current->phoneNumber);
+                printf("í•™ê³¼: %s\n", current->department);
+                printf("í•™ë…„: %d\n", current->schoolYear);
+                printf("í•™ë²ˆ: %d\n", current->schoolNumber);
+                printf("ì‹œì‘ ì‹œê°„: %d\n", current->start);
+                printf("ì¢…ë£Œ ì‹œê°„: %d\n", current->end);
                 printf("==========================\n");
-                printf("ÇØ´ç ÇĞ»ıÀÌ ¸Â½À´Ï±î? Y/N\n");
+                printf("í•´ë‹¹ í•™ìƒì´ ë§ìŠµë‹ˆê¹Œ? Y/N\n");
                 char confirm;
-                while (1) {
+                while (1)
+                {
                     confirm = getchar();
-                    while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+                    while (getchar() != '\n')
+                        ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-                    if (confirm == 'Y' || confirm == 'y') {
+                    if (confirm == 'Y' || confirm == 'y')
+                    {
                         delete_lectureRoom();
-                        printf("»èÁ¦µÇ¾ú½À´Ï´Ù.\n");
-                        return; // ÇÔ¼ö Á¾·á
+                        printf("ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+                        return; // í•¨ìˆ˜ ì¢…ë£Œ
                     }
-                    else if (confirm == 'N' || confirm == 'n') {
-                        printf("Ãë¼ÒµÇ¾ú½À´Ï´Ù.\n");
-                        return; // ÇÔ¼ö Á¾·á
+                    else if (confirm == 'N' || confirm == 'n')
+                    {
+                        printf("ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
+                        return; // í•¨ìˆ˜ ì¢…ë£Œ
                     }
-                    else {
-                        printf("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. Y ¶Ç´Â NÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä: ");
+                    else
+                    {
+                        printf("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. Y ë˜ëŠ” Nì„ ì…ë ¥í•´ì£¼ì„¸ìš”: ");
                     }
                 }
             }
             current = current->next;
         }
-        printf("ÇØ´ç ÇĞ¹øÀÇ ¿¹¾àÀÌ ¾ø½À´Ï´Ù.\n");
+        printf("í•´ë‹¹ í•™ë²ˆì˜ ì˜ˆì•½ì´ ì—†ìŠµë‹ˆë‹¤.\n");
         break;
     }
 
     case 'U':
-    case 'u': {
-        printf("¼öÁ¤ÇÒ ¿¹¾àÀÇ ÇĞ¹øÀ» ÀÔ·ÂÇÏ¼¼¿ä: ");
+    case 'u':
+    {
+        printf("ìˆ˜ì •í•  ì˜ˆì•½ì˜ í•™ë²ˆì„ ì…ë ¥í•˜ì„¸ìš”: ");
         scanf("%d", &schoolNumber);
-        while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+        while (getchar() != '\n')
+            ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-        struct Room* current = head->next;
+        struct Room *current = head->next;
 
-        while (current != tail) {
-            if (current->schoolNumber == schoolNumber) {
-                printf("\n=== ÇöÀç Á¤º¸ ===\n");
-                printf("ÀÌ¸§: %s\n", current->name);
-                printf("ÀüÈ­¹øÈ£: %s\n", current->phoneNumber);
-                printf("ÇĞ°ú: %s\n", current->department);
-                printf("ÇĞ³â: %d\n", current->schoolYear);
-                printf("ÇĞ¹ø: %d\n", current->schoolNumber);
-                printf("½ÃÀÛ ½Ã°£: %d\n", current->start);
-                printf("Á¾·á ½Ã°£: %d\n", current->end);
+        while (current != tail)
+        {
+            if (current->schoolNumber == schoolNumber)
+            {
+                printf("\n=== í˜„ì¬ ì •ë³´ ===\n");
+                printf("ì´ë¦„: %s\n", current->name);
+                printf("ì „í™”ë²ˆí˜¸: %s\n", current->phoneNumber);
+                printf("í•™ê³¼: %s\n", current->department);
+                printf("í•™ë…„: %d\n", current->schoolYear);
+                printf("í•™ë²ˆ: %d\n", current->schoolNumber);
+                printf("ì‹œì‘ ì‹œê°„: %d\n", current->start);
+                printf("ì¢…ë£Œ ì‹œê°„: %d\n", current->end);
                 printf("==========================\n");
-                printf("ÇØ´ç ÇĞ»ıÀÌ ¸Â½À´Ï±î? Y/N\n");
+                printf("í•´ë‹¹ í•™ìƒì´ ë§ìŠµë‹ˆê¹Œ? Y/N\n");
                 char confirm;
-                while (1) {
+                while (1)
+                {
                     confirm = getchar();
-                    while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+                    while (getchar() != '\n')
+                        ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-                    if (confirm == 'Y' || confirm == 'y') {
-                        printf("\n»õ·Î¿î Á¤º¸¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\n");
+                    if (confirm == 'Y' || confirm == 'y')
+                    {
+                        printf("\nìƒˆë¡œìš´ ì •ë³´ë¥¼ ì…ë ¥í•˜ì„¸ìš”.\n");
 
-                        // ÀÌ¸§ ÀÔ·Â
-                        validate_input("ÀÌ¸§: ", current->name, 50);
+                        // ì´ë¦„ ì…ë ¥
+                        validate_input("ì´ë¦„: ", current->name, 50);
 
-                        // ÀüÈ­¹øÈ£ ÀÔ·Â
+                        // ì „í™”ë²ˆí˜¸ ì…ë ¥
                         validate_phone(current->phoneNumber);
 
-                        // ÇĞ°ú ÀÔ·Â
-                        validate_input("ÇĞ°ú: ", current->department, 50);
+                        // í•™ê³¼ ì…ë ¥
+                        validate_input("í•™ê³¼: ", current->department, 50);
 
-                        // ÇĞ³â ÀÔ·Â
-                        printf("ÇĞ³â: ");
+                        // í•™ë…„ ì…ë ¥
+                        printf("í•™ë…„: ");
                         scanf("%d", &current->schoolYear);
-                        while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+                        while (getchar() != '\n')
+                            ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-                        // ½ÃÀÛ ½Ã°£°ú Á¾·á ½Ã°£ ÀÔ·Â
+                        // ì‹œì‘ ì‹œê°„ê³¼ ì¢…ë£Œ ì‹œê°„ ì…ë ¥
                         int newStart, newEnd;
-                        printf("½ÃÀÛ ½Ã°£(0-23): ");
+                        printf("ì‹œì‘ ì‹œê°„(0-23): ");
                         scanf("%d", &newStart);
-                        printf("Á¾·á ½Ã°£(1-24): ");
+                        printf("ì¢…ë£Œ ì‹œê°„(1-24): ");
                         scanf("%d", &newEnd);
-                        while (getchar() != '\n'); // ÀÔ·Â ¹öÆÛ ºñ¿ì±â
+                        while (getchar() != '\n')
+                            ; // ì…ë ¥ ë²„í¼ ë¹„ìš°ê¸°
 
-                        // ¿¹¾à ½Ã°£ Áßº¹ È®ÀÎ
-                        struct Room* temp = head->next;
-                        while (temp != tail) {
-                            if (temp != current && (newStart < temp->end && newEnd > temp->start)) {
-                                printf("°ãÄ¡´Â ¿¹¾àÀÌ ÀÖ½À´Ï´Ù. º¯°æÀ» Ãë¼ÒÇÕ´Ï´Ù.\n");
+                        // ì˜ˆì•½ ì‹œê°„ ì¤‘ë³µ í™•ì¸
+                        struct Room *temp = head->next;
+                        while (temp != tail)
+                        {
+                            if (temp != current && (newStart < temp->end && newEnd > temp->start))
+                            {
+                                printf("ê²¹ì¹˜ëŠ” ì˜ˆì•½ì´ ìˆìŠµë‹ˆë‹¤. ë³€ê²½ì„ ì·¨ì†Œí•©ë‹ˆë‹¤.\n");
                                 return;
                             }
                             temp = temp->next;
                         }
 
-                        // ½Ã°£ ¾÷µ¥ÀÌÆ®
+                        // ì‹œê°„ ì—…ë°ì´íŠ¸
                         current->start = newStart;
                         current->end = newEnd;
 
-                        printf("¿¹¾àÀÌ ¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù!\n");
+                        printf("ì˜ˆì•½ì´ ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤!\n");
                         return;
                     }
-                    else if (confirm == 'N' || confirm == 'n') {
-                        printf("Ãë¼ÒµÇ¾ú½À´Ï´Ù.\n");
+                    else if (confirm == 'N' || confirm == 'n')
+                    {
+                        printf("ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤.\n");
                         return;
                     }
-                    else {
-                        printf("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù. Y ¶Ç´Â NÀ» ÀÔ·ÂÇØÁÖ¼¼¿ä: ");
+                    else
+                    {
+                        printf("ì˜ëª»ëœ ì…ë ¥ì…ë‹ˆë‹¤. Y ë˜ëŠ” Nì„ ì…ë ¥í•´ì£¼ì„¸ìš”: ");
                     }
                 }
             }
             current = current->next;
         }
-        printf("ÇØ´ç ÇĞ¹øÀÇ ¿¹¾àÀÌ ¾ø½À´Ï´Ù.\n");
+        printf("í•´ë‹¹ í•™ë²ˆì˜ ì˜ˆì•½ì´ ì—†ìŠµë‹ˆë‹¤.\n");
         break;
     }
 
     default:
-        printf("Àß¸øµÈ ¸í·É¾îÀÔ´Ï´Ù.\n");
+        printf("ì˜ëª»ëœ ëª…ë ¹ì–´ì…ë‹ˆë‹¤.\n");
         break;
     }
 }
 
-void free_lectureRooms() {
-    struct Room* current = head;
-    while (current != NULL) {
-        struct Room* temp = current;
+void free_lectureRooms()
+{
+    struct Room *current = head;
+    while (current != NULL)
+    {
+        struct Room *temp = current;
         current = current->next;
         free(temp);
     }
 }
 
-
-// ¸Ş´º Ãâ·Â ÇÔ¼ö
+// ë©”ë‰´ ì¶œë ¥ í•¨ìˆ˜
 void menu_display()
 {
-    printf("\n===== ¸Ş´º =====\n");
-    printf("A. °­ÀÇ½Ç ¿¹¾à\n");
-    printf("L. ¿¹¾à ¸ñ·Ï\n");
-    printf("U. ¿¹¾à Á¤º¸ ¼öÁ¤/»èÁ¦\n");
-    printf("Q. ÇÁ·Î±×·¥ Á¾·á\n");
+    printf("\n===== ë©”ë‰´ =====\n");
+    printf("A. ê°•ì˜ì‹¤ ì˜ˆì•½\n");
+    printf("L. ì˜ˆì•½ ëª©ë¡\n");
+    printf("U. ì˜ˆì•½ ì •ë³´ ìˆ˜ì •/ì‚­ì œ\n");
+    printf("Q. í”„ë¡œê·¸ë¨ ì¢…ë£Œ\n");
     printf("=================\n");
 }
 
-// ¸ŞÀÎ ÇÔ¼ö
-int main() {
+void load_csv(const char *filename)
+{
+    FILE *file = fopen(filename, "r");
+    if (!file)
+    {
+        printf("CSV íŒŒì¼ì„ ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: %s\n", filename);
+        return;
+    }
+
+    char line[256];
+    while (fgets(line, sizeof(line), file))
+    {
+        // ì²« ë²ˆì§¸ ì¤„ì´ í—¤ë”ë¼ë©´ ê±´ë„ˆë›°ê¸°
+        if (strstr(line, "name,phoneNumber,department"))
+        {
+            continue;
+        }
+
+        char name[50], phoneNumber[20], department[50];
+        int schoolYear, schoolNumber, start, end;
+
+        // CSV íŒŒì¼ í˜•ì‹ì— ë”°ë¼ sscanfë¡œ ê°’ ì¶”ì¶œ
+        if (sscanf(line, "%49[^,],%19[^,],%49[^,],%d,%d,%d,%d", name, phoneNumber, department, &schoolYear, &schoolNumber, &start, &end) == 7)
+        {
+            struct Room *new_Room = create_lectureRoom(name, phoneNumber, department, schoolYear, schoolNumber, start, end);
+            if (!new_Room)
+            {
+                printf("ìƒˆë¡œìš´ í•™ìƒ ë°ì´í„°ë¥¼ ì¶”ê°€í•˜ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.\n");
+                continue;
+            }
+
+            // ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
+            new_Room->next = head->next;
+            head->next = new_Room;
+        }
+        else
+        {
+            printf("CSV ë°ì´í„° í˜•ì‹ì´ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤: %s\n", line);
+        }
+    }
+
+    fclose(file);
+    printf("CSV íŒŒì¼ì—ì„œ ë°ì´í„°ë¥¼ ì„±ê³µì ìœ¼ë¡œ ë¡œë“œí–ˆìŠµë‹ˆë‹¤.\n");
+}
+
+// ë©”ì¸ í•¨ìˆ˜
+int main()
+{
     char command;
 
-    make_lectureRoom(); // ÃÊ±âÈ­
+    make_lectureRoom(); // ì´ˆê¸°í™”
 
+    // CSV íŒŒì¼ ë¡œë“œ
+    load_csv("/Users/gimseohyeon/Documents/ALGO-proj/Project5/Project5/studentList.csv"); // ì ˆëŒ€ê²½ë¡œë¡œ ë³µì‚¬
     do
     {
         menu_display();
-        printf("¸í·É¾î¸¦ ÀÔ·ÂÇÏ½Ã¿À: ");
+        printf("ëª…ë ¹ì–´ë¥¼ ì…ë ¥í•˜ì‹œì˜¤: ");
         command = getchar();
-        while (getchar() != '\n');
+        while (getchar() != '\n')
+            ;
 
         if (command == ' ' || command == '\t' || command == '\n')
         {
-            printf("°æ°í: ¸í·É¾î´Â °ø¹éÀÌ ¾Æ´Ñ °ªÀ» ÀÔ·ÂÇØ¾ß ÇÕ´Ï´Ù.\n");
+            printf("ê²½ê³ : ëª…ë ¹ì–´ëŠ” ê³µë°±ì´ ì•„ë‹Œ ê°’ì„ ì…ë ¥í•´ì•¼ í•©ë‹ˆë‹¤.\n");
             continue;
         }
 
@@ -471,12 +577,12 @@ int main() {
 
         case 'Q':
         case 'q':
-            printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
+            printf("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.\n");
             free_lectureRooms();
             break;
 
         default:
-            printf("Àß¸øµÈ ¸í·É¾îÀÔ´Ï´Ù.\n");
+            printf("ì˜ëª»ëœ ëª…ë ¹ì–´ì…ë‹ˆë‹¤.\n");
             break;
         }
     } while (command != 'q' && command != 'Q');
