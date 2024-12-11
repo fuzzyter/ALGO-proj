@@ -1,3 +1,0 @@
-E:/Programming/Project/ALGO-proj/build/CMakeFiles/RosterManager.dir
-E:/Programming/Project/ALGO-proj/build/CMakeFiles/ALL_BUILD.dir
-E:/Programming/Project/ALGO-proj/build/CMakeFiles/ZERO_CHECK.dir
